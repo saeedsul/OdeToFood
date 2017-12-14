@@ -5,8 +5,10 @@
 
 <h2>@Model.CurrentMessage</h2>
 
-    @foreach (var restaurant in Model.Resturants)
-    {
-        <div>@restaurant.Id</div>
-        <div>@restaurant.Name</div>
-    }
+@foreach (var restaurant in Model.Resturants)
+{
+    <div>
+        <a asp-action="Details" asp-route-id="@restaurant.Id">@restaurant.Id</a>
+    </div>
+    <div>@restaurant.Name</div>
+}

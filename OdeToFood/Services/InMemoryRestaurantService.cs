@@ -6,6 +6,7 @@ namespace OdeToFood.Services
 {
     public class InMemoryRestaurantService : IRestaurantService
     {
+        readonly List<Restaurant> _restaurants;
         public InMemoryRestaurantService()
         {
             _restaurants = new List<Restaurant>
@@ -21,6 +22,9 @@ namespace OdeToFood.Services
             return _restaurants.OrderBy(r => r.Name);
         }
 
-        List<Restaurant> _restaurants;
+        public Restaurant Get(int id)
+        {
+            return _restaurants.FirstOrDefault(r => r.Id == id);
+        }
     }
 }

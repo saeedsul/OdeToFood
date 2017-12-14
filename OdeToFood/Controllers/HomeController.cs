@@ -28,6 +28,28 @@ namespace OdeToFood.Controllers
             return View(model);
         }
 
+        public IActionResult Details(int id)
+        {
+            var resturantDto = _restaurantService.Get(id);
+
+            if (resturantDto == null)
+            {
+                return View("NotFound", new NotFoundView { RequestId = id.ToString(), Message = $"Resturant not found." });
+            }
+
+            var model = new ResturantDetailViewModel
+            {
+                Resturant = Mapper.Map<ResturantDto>(resturantDto)
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Details(ResturantDetailViewModel viewModel)
+        {
+            return Ok();
+        }
 
         public IActionResult Error()
         {

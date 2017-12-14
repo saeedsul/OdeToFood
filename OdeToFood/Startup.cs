@@ -45,6 +45,7 @@ namespace OdeToFood
                     cfg.CreateMap<Entities.Restaurant, ResturantDto>()
             );
 
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

@@ -1,5 +1,3 @@
-using System;
-
 namespace OdeToFood.Models
 {
     public class ErrorViewModel
