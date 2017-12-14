@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OdeToFood.Dtos;
+using OdeToFood.Repositories;
+using OdeToFood.Services;
 
 namespace OdeToFood
 {
@@ -21,6 +20,9 @@ namespace OdeToFood
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IGreeter, GreeterRepository>();
+            services.AddSingleton<IRestaurantService, InMemoryRestaurantService>();
+
             services.AddMvc();
         }
 
@@ -38,6 +40,10 @@ namespace OdeToFood
             }
 
             app.UseStaticFiles();
+
+            AutoMapper.Mapper.Initialize(cfg =>
+                    cfg.CreateMap<Entities.Restaurant, ResturantDto>()
+            );
 
             app.UseMvc(routes =>
             {

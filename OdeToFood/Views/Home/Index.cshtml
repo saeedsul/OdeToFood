@@ -1,4 +1,12 @@
-﻿@{
+﻿@model ResturantsViewModel
+@{
     ViewData["Title"] = "OdeToFood";
 }
 
+<h2>@Model.CurrentMessage</h2>
+
+    @foreach (var restaurant in Model.Resturants)
+    {
+        <div>@restaurant.Id</div>
+        <div>@restaurant.Name</div>
+    }
