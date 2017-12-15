@@ -1,0 +1,7 @@
+﻿@using OdeToFood.Enums
+@model ResturantCreateViewModel
+
+<form method="post">
+    <input asp-for="Resturant.Name"/>
+    @*<select asp-for="Resturant.Cuisine" asp-items="@Html.GetEnumSelectList(CuisineType)()"></select>*@
+</form>

@@ -3,8 +3,9 @@
 <form asp-action="Details" method="post" class="form-horizontal" role="form">
     <div>
         @Model.Resturant.Id
-        <input asp-for="Resturant.Id" type="hidden"/>
+        <input asp-for="Resturant.Id" type="hidden" />
     </div>
-    <div><input asp-for="Resturant.Name" class="form-control"/></div>
+    <div><input asp-for="Resturant.Name" class="form-control" /></div>
     <div><button type="submit">Submit</button></div>
-</form> 
+</form>
+<a asp-action="Index" asp-controller="Home">Back</a>

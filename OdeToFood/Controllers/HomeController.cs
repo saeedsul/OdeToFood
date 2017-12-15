@@ -34,7 +34,8 @@ namespace OdeToFood.Controllers
 
             if (resturantDto == null)
             {
-                return View("NotFound", new NotFoundView { RequestId = id.ToString(), Message = $"Resturant not found." });
+                return RedirectToAction(nameof(Index));
+                //return View("NotFound", new NotFoundView { RequestId = id.ToString(), Message = $"Resturant not found." });
             }
 
             var model = new ResturantDetailViewModel
@@ -49,6 +50,12 @@ namespace OdeToFood.Controllers
         public IActionResult Details(ResturantDetailViewModel viewModel)
         {
             return Ok();
+        }
+
+        public IActionResult Create()
+        {
+            var model = new ResturantCreateViewModel();
+            return View(model);
         }
 
         public IActionResult Error()
