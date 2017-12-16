@@ -1,10 +1,12 @@
 ﻿using OdeToFood.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace OdeToFood.Dtos
+namespace OdeToFood.Entities
 {
-    public class ResturanCreatetDto
+    public class Restaurants
     {
+        public int Id { get; set; }
+
         [Required, MaxLength(80)]
         [Display(Name = "Restaurant Name")]
         public string Name { get; set; }

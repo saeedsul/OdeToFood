@@ -8,7 +8,7 @@
 @foreach (var restaurant in Model.Resturants)
 {
     <div>
-        <a asp-action="Details" asp-route-id="@restaurant.Id">@restaurant.Id</a>
+        <a asp-action="Edit" asp-route-id=@restaurant.Id>Edit</a>
     </div>
     <div>@restaurant.Name</div>
 }

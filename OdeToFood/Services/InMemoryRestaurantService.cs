@@ -6,25 +6,35 @@ namespace OdeToFood.Services
 {
     public class InMemoryRestaurantService : IRestaurantService
     {
-        readonly List<Restaurant> _restaurants;
+        readonly List<Restaurants> _restaurants;
         public InMemoryRestaurantService()
         {
-            _restaurants = new List<Restaurant>
+            _restaurants = new List<Restaurants>
             {
-                new Restaurant { Id = 1, Name = "Scott's Pizza Place"},
-                new Restaurant { Id = 2, Name = "Tersiguels"},
-                new Restaurant { Id = 3, Name = "King's Contrivance"}
+                new Restaurants { Id = 1, Name = "Scott's Pizza Place"},
+                new Restaurants { Id = 2, Name = "Tersiguels"},
+                new Restaurants { Id = 3, Name = "King's Contrivance"}
             };
         }
 
-        public IEnumerable<Restaurant> GetAll()
+        public IEnumerable<Restaurants> GetAll()
         {
             return _restaurants.OrderBy(r => r.Name);
         }
 
-        public Restaurant Get(int id)
+        public Restaurants Get(int id)
         {
             return _restaurants.FirstOrDefault(r => r.Id == id);
+        }
+
+        public Restaurants Add(Restaurants newRestaurant)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Commit()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

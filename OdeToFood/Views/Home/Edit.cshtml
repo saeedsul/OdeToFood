@@ -1,0 +1,25 @@
+﻿@using OdeToFood.Enums
+@model ResturantDetailViewModel
+
+<h1>Editing: @Model.Resturant.Name</h1>
+
+<form   asp-action="Edit" method="post">
+    <div class="form-group">
+        <input type="hidden" asp-for="Resturant.Id" />
+        <label asp-for="@Model.Resturant.Name"></label>
+        <input asp-for="@Model.Resturant.Name" class="form-control" />
+        <span asp-validation-for="@Model.Resturant.Name"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Resturant.Cuisine"></label>
+        <select asp-for="@Model.Resturant.Cuisine" asp-items="@Html.GetEnumSelectList(typeof(CuisineType))" class="form-control"></select>
+        <span asp-validation-for="@Model.Resturant.Cuisine"></span>
+    </div>
+    <div>
+        <input type="submit" class="btn btn-primary" value="Save" />
+    </div>
+</form>
+
+<a asp-action="Index" asp-controller="Home">Back</a>
+
+ 

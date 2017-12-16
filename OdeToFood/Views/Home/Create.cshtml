@@ -1,7 +1,17 @@
-﻿@using OdeToFood.Enums
-@model ResturantCreateViewModel
+﻿@model ResturantCreateViewModel
 
 <form method="post">
-    <input asp-for="Resturant.Name"/>
-    @*<select asp-for="Resturant.Cuisine" asp-items="@Html.GetEnumSelectList(CuisineType)()"></select>*@
+    <div class="form-group">
+        <label asp-for="Resturant.Name"></label>
+        <input asp-for="Resturant.Name" class="form-control" placeholder="Resturant name" />
+        @Html.ValidationMessageFor(m => m.Resturant.Name)
+    </div>
+    <div class="form-group">
+        <select asp-for="Resturant.Cuisine" asp-items="@Html.GetEnumSelectList(typeof(OdeToFood.Enums.CuisineType))" class="form-control"></select>
+        @Html.ValidationMessageFor(m => m.Resturant.Cuisine)
+    </div>
+    <div>
+        <input type="submit" class="btn btn-primary" value="Save" />
+    </div>
 </form>
+

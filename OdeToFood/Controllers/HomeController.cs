@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using OdeToFood.Dtos;
+using OdeToFood.Entities;
 using OdeToFood.Models;
 using OdeToFood.Services;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace OdeToFood.Controllers
             _restaurantService = restaurantService;
             _greeter = greeter;
         }
+
         public IActionResult Index()
         {
             var model = new ResturantsViewModel
@@ -28,34 +30,71 @@ namespace OdeToFood.Controllers
             return View(model);
         }
 
-        public IActionResult Details(int id)
+        [Route("[controller]/[action]/{id}", Name = "GetResturant")]
+        [HttpGet]
+        public IActionResult Edit(int id)
         {
-            var resturantDto = _restaurantService.Get(id);
+            var resturant = _restaurantService.Get(id);
 
-            if (resturantDto == null)
+            if (resturant == null)
             {
                 return RedirectToAction(nameof(Index));
-                //return View("NotFound", new NotFoundView { RequestId = id.ToString(), Message = $"Resturant not found." });
             }
 
             var model = new ResturantDetailViewModel
             {
-                Resturant = Mapper.Map<ResturantDto>(resturantDto)
+                Resturant = Mapper.Map<ResturantDto>(resturant)
             };
 
             return View(model);
         }
 
-        [HttpPost]
-        public IActionResult Details(ResturantDetailViewModel viewModel)
+
+        [Route("[controller]/[action]/{id}")]
+        [HttpPost, ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, ResturantDetailViewModel model)
         {
-            return Ok();
+            var restaurant = _restaurantService.Get(id);
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            restaurant.Cuisine = model.Resturant.Cuisine;
+            restaurant.Name = model.Resturant.Name;
+
+            // save to db
+            _restaurantService.Commit();
+
+            return View("Edit", model);
         }
 
         public IActionResult Create()
         {
             var model = new ResturantCreateViewModel();
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(ResturantCreateViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var newRestaurantDto = new ResturantDto
+            {
+                Cuisine = model.Resturant.Cuisine,
+                Name = model.Resturant.Name
+            };
+            var newRestaurant = Mapper.Map<Restaurants>(newRestaurantDto);
+
+            newRestaurant = _restaurantService.Add(newRestaurant);
+            _restaurantService.Commit();
+
+            // add to database
+            return CreatedAtRoute("GetResturant", new { id = newRestaurant.Id }, newRestaurant);
         }
 
         public IActionResult Error()
