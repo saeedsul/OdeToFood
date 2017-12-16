@@ -1,13 +1,14 @@
 ﻿using OdeToFood.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OdeToFood.Services
 {
     public interface IRestaurantService
     {
-        IEnumerable<Restaurants> GetAll();
-        Restaurants Get(int id);
-        Restaurants Add(Restaurants newRestaurant);
+        Task<IEnumerable<Restaurants>> GetAll();
+        Task<Restaurants> Get(int id);
+        Task<Restaurants> Add(Restaurants newRestaurant);
         void Commit();
     }
 }

@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
 using OdeToFood.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OdeToFood.Services
 {
@@ -13,9 +14,9 @@ namespace OdeToFood.Services
             _context = context;
         }
 
-        public Restaurants Add(Restaurants newRestaurant)
+        public async Task<Restaurants> Add(Restaurants newRestaurant)
         {
-            _context.Add(newRestaurant);
+            await _context.AddAsync(newRestaurant);
             return newRestaurant;
         }
 
@@ -24,14 +25,14 @@ namespace OdeToFood.Services
             _context.SaveChanges();
         }
 
-        public Restaurants Get(int id)
+        public async Task<Restaurants> Get(int id)
         {
-            return _context.Restaurants.FirstOrDefault(r => r.Id == id);
+            return await _context.Restaurants.FirstOrDefaultAsync(r => r.Id == id);
         }
 
-        public IEnumerable<Restaurants> GetAll()
+        public async Task<IEnumerable<Restaurants>> GetAll()
         {
-            return _context.Restaurants;
+            return await _context.Restaurants.ToListAsync();
         }
     }
 }

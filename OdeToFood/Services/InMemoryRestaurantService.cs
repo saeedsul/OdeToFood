@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace OdeToFood.Services
 {
-    public class InMemoryRestaurantService : IRestaurantService
+    public class InMemoryRestaurantService //: IRestaurantService
     {
         readonly List<Restaurants> _restaurants;
         public InMemoryRestaurantService()

@@ -24,7 +24,7 @@ namespace OdeToFood.Controllers
         {
             var model = new ResturantsViewModel
             {
-                Resturants = Mapper.Map<IEnumerable<ResturantDto>>(_restaurantService.GetAll()),
+                Resturants = Mapper.Map<IEnumerable<ResturantDto>>(_restaurantService.GetAll().Result),
                 CurrentMessage = _greeter.GetMessageOfTheDay()
             };
             return View(model);
@@ -34,7 +34,7 @@ namespace OdeToFood.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var resturant = _restaurantService.Get(id);
+            var resturant = _restaurantService.Get(id).Result;
 
             if (resturant == null)
             {
@@ -54,7 +54,7 @@ namespace OdeToFood.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public IActionResult Edit(int id, ResturantDetailViewModel model)
         {
-            var restaurant = _restaurantService.Get(id);
+            var restaurant = _restaurantService.Get(id).Result;
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -90,11 +90,13 @@ namespace OdeToFood.Controllers
             };
             var newRestaurant = Mapper.Map<Restaurants>(newRestaurantDto);
 
-            newRestaurant = _restaurantService.Add(newRestaurant);
-            _restaurantService.Commit();
+            var record = _restaurantService.Add(newRestaurant).Result;
 
             // add to database
-            return CreatedAtRoute("GetResturant", new { id = newRestaurant.Id }, newRestaurant);
+            _restaurantService.Commit(); 
+
+            // return CreatedAtRoute("GetResturant", new { id = newRestaurant.Id }, newRestaurant);
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Error()

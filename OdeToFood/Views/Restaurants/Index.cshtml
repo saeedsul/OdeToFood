@@ -1,0 +1,16 @@
+﻿@model ResturantsViewModel
+@{
+    ViewData["Title"] = "OdeToFood";
+}
+
+<h2>@Model.CurrentMessage</h2>
+
+@foreach (var restaurant in Model.Resturants)
+{
+    <div>
+        <a asp-route="GetRestaurant" asp-route-id=@restaurant.Id>Details</a>
+    </div>
+    <div>@restaurant.Name</div>
+}
+
+<div><a asp-action="Create">Add Resturant</a></div>
